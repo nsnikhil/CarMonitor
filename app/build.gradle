@@ -1,0 +1,135 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.nsnik.nrs.carmonitor"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resConfigs "en"
+        splits {
+            abi {
+                enable false  //change to true
+                reset()
+                include "x86_64", "x86", "armeabi", "armeabi-v7a", "arm64-v8a", "mips"
+                universalApk false
+            }
+            density {
+                enable false  //change to true
+                reset()
+                include "ldpi", "mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    if (project.hasProperty('devBuild')) {
+        splits.density.enable = false
+        splits.abi.enable = false
+        aaptOptions {
+            cruncherEnabled = false
+        }
+    }
+    allprojects {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" << "-Xlint:cast" << "-Xlint:empty"
+        }
+    }
+    testOptions {
+        execution 'ANDROID_TEST_ORCHESTRATOR'
+    }
+}
+
+/*ext.abiCodes = ['armeabi': 3, 'armeabi-v7a': 4, 'arm64-v8a': 5, mips: 6, 'x86': 7, 'x86_64': 8]
+ext.densityCodes = ['ldpi': 3, 'mdpi': 4, 'hdpi': 5, 'xhdpi': 6, 'xxhdpi': 7, 'xxxhdpi': 8]
+import com.android.build.OutputFile
+
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        def baseAbiVersionCode = project.ext.abiCodes.get(output.getFilter(OutputFile.ABI))
+        def baseDensityVersionCode = project.ext.densityCodes.get(output.getFilter(OutputFile.DENSITY))
+        if (baseAbiVersionCode != null && baseDensityVersionCode != null) {
+            output.versionCodeOverride = baseAbiVersionCode * 1000 + baseDensityVersionCode * 1000 + variant.versionCode
+        }
+    }
+}*/
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //APPCOMPAT LIBRARY
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibVersion"
+
+    //ANNOTATION SUPPORT LIBRARY
+    implementation "com.android.support:support-annotations:$rootProject.supportLibVersion"
+
+    //DESIGN SUPPORT LIBRARY
+    implementation "com.android.support:design:$rootProject.supportLibVersion"
+
+    //ANNOTATION SUPPORT LIBRARY
+    implementation "com.android.support:support-annotations:$rootProject.supportLibVersion"
+
+    //CONSTRAINT LAYOUT
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+
+    //FINDBUGS JSR305
+    implementation "com.google.code.findbugs:jsr305:$rootProject.findBugJsr305Version"
+
+    //TIMBER LOGGER
+    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
+    //BUTTER KNIFE
+    implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+
+    //GUAVA
+    implementation "com.google.guava:guava:$rootProject.guavaAndroidVersion"
+
+    //RX JAVA & ANDROID
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
+
+    //RX BINDING
+    implementation "com.jakewharton.rxbinding2:rxbinding:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-design:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$rootProject.rxBindingVersion"
+
+    //MOCKITO
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+
+    //JETBRAINS ANNOTATION
+    implementation "org.jetbrains:annotations:$rootProject.jetBrainsAnnotationVersion"
+
+    //JUNIT 4
+    testImplementation "junit:junit:$rootProject.jUnitVersion"
+
+    // ANDROID JUNIT RUNNER AND JUNIT RULES
+    androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
+    androidTestImplementation "com.android.support.test:rules:$rootProject.rulesVersion"
+    androidTestUtil "com.android.support.test:orchestrator:$rootProject.orchestratorVersion"
+
+    //ESPRESSO
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
+    androidTestImplementation "com.android.support.test.espresso.idling:idling-concurrent:$rootProject.espressoVersion"
+    //androidTestImplementation "com.android.support.test.espresso:espresso-accessibility:$rootProject.espressoVersion"
+    implementation "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
+
+    //ROBO-ELECTRIC
+    testImplementation "org.robolectric:robolectric:$rootProject.roboElectricVersion"
+}

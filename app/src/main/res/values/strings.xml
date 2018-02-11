@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Car Monitor</string>
+
+    <!-- from-->
+    <string name="form_name">Name</string>
+    <string name="form_phone">Phone no</string>
+    <string name="form_car_no">Car no</string>
+    <!-- -->
+    
+</resources>
