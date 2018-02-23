@@ -17,12 +17,38 @@
 package com.nsnik.nrs.carmonitor;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatDelegate;
 
+import com.nsnik.nrs.carmonitor.dagger.components.DaggerDatabaseComponent;
+import com.nsnik.nrs.carmonitor.dagger.components.DaggerNetworkComponent;
+import com.nsnik.nrs.carmonitor.dagger.components.DatabaseComponent;
+import com.nsnik.nrs.carmonitor.dagger.components.NetworkComponent;
+import com.nsnik.nrs.carmonitor.dagger.modules.ContextModule;
+import com.nsnik.nrs.carmonitor.util.DbUtil;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+
+import retrofit2.Retrofit;
 import timber.log.Timber;
 
 public class MyApplication extends Application{
+
+    static {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+    private RefWatcher refWatcher;
+    private ContextModule mContextModule;
+    private DbUtil mDbUtil;
+    private Retrofit mRetrofitClient;
+
+    public static RefWatcher getRefWatcher(@NonNull Context context) {
+        MyApplication application = (MyApplication) context.getApplicationContext();
+        return application.refWatcher;
+    }
 
     @Override
     public void onCreate() {
@@ -44,5 +70,40 @@ public class MyApplication extends Application{
                     .penaltyLog()
                     .build());
         }
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        moduleSetter();
     }
+
+    /**
+     *
+     */
+    private void moduleSetter() {
+        setContextModule();
+        setNetworkModule();
+    }
+
+    private void setContextModule() {
+        mContextModule = new ContextModule(this);
+    }
+
+    private void setNetworkModule() {
+        NetworkComponent networkComponent = DaggerNetworkComponent.create();
+        mRetrofitClient = networkComponent.getRetrofit();
+    }
+
+    private void setDatabaseComponent() {
+        DatabaseComponent databaseComponent = DaggerDatabaseComponent.builder().contextModule(mContextModule).build();
+        mDbUtil = databaseComponent.getDbUtil();
+    }
+
+    public Retrofit getRetrofitClient() {
+        return mRetrofitClient;
+    }
+
+    public DbUtil getDbUtil() {
+        return mDbUtil;
+    }
+
 }

@@ -19,6 +19,13 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-assumenosideeffects class timber.log.Timber {
+ public static *** d(...);
+ public static *** i(...);
+ public static *** v(...);
+}
+
 -keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
 -keep class **$$ViewBinder { *; }
@@ -30,3 +37,37 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
+
+-dontwarn com.google.errorprone.annotations.*
+
+-dontwarn com.f2prateek.dart.internal.**
+-keep class **$$ExtraInjector { *; }
+-keepclasseswithmembernames class * {
+    @com.f2prateek.dart.* <fields>;
+}
+-keep class **Henson { *; }
+-keep class **$$IntentBuilder { *; }
+
+-keep class * implements android.arch.lifecycle.GeneratedAdapter {<init>(...);}
+
+-keepclasseswithmembers class * implements android.arch.lifecycle.GenericLifecycleObserver {
+<init>(...);
+}
+-keepclassmembers class android.arch.lifecycle.Lifecycle$* { *; }
+-keepclassmembers class * {
+    @android.arch.lifecycle.OnLifecycleEvent *;
+}
+-keepclassmembers class * extends android.arch.lifecycle.ViewModel {
+<init>(...);
+}
+
+-dontwarn sun.misc.Unsafe
+
+-dontwarn org.w3c.dom.bootstrap.DOMImplementationRegistry
+
+-dontwarn javax.annotation.**
+
+-dontwarn org.mockito.**
+
+-keep class **.AutoValue_*
+-keepnames @yourpackage.AutoGson class *

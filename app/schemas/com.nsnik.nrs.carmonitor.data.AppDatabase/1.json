@@ -1,0 +1,77 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "73e098f195c2c2d55122e98f2509ea74",
+    "entities": [
+      {
+        "tableName": "CarEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mCarNo` TEXT NOT NULL, `mMethaneLevel` REAL NOT NULL, `mCarbonMonoxideLevel` REAL NOT NULL, `mNitrogenLevel` REAL NOT NULL, PRIMARY KEY(`mCarNo`))",
+        "fields": [
+          {
+            "fieldPath": "mCarNo",
+            "columnName": "mCarNo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mMethaneLevel",
+            "columnName": "mMethaneLevel",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mCarbonMonoxideLevel",
+            "columnName": "mCarbonMonoxideLevel",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mNitrogenLevel",
+            "columnName": "mNitrogenLevel",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mCarNo"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "UserEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mPhoneNo` INTEGER NOT NULL, `mUserName` TEXT, PRIMARY KEY(`mPhoneNo`))",
+        "fields": [
+          {
+            "fieldPath": "mPhoneNo",
+            "columnName": "mPhoneNo",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mUserName",
+            "columnName": "mUserName",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mPhoneNo"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"73e098f195c2c2d55122e98f2509ea74\")"
+    ]
+  }
+}

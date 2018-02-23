@@ -23,6 +23,14 @@ android {
                 include "ldpi", "mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"
             }
         }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
     buildTypes {
         release {
@@ -85,8 +93,12 @@ android.applicationVariants.all { variant ->
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+
     //APPCOMPAT LIBRARY
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibVersion"
+
+    //RECYCLER VIEW
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibVersion"
 
     //ANNOTATION SUPPORT LIBRARY
     implementation "com.android.support:support-annotations:$rootProject.supportLibVersion"
@@ -94,26 +106,13 @@ dependencies {
     //DESIGN SUPPORT LIBRARY
     implementation "com.android.support:design:$rootProject.supportLibVersion"
 
-    //ANNOTATION SUPPORT LIBRARY
-    implementation "com.android.support:support-annotations:$rootProject.supportLibVersion"
-
     //CONSTRAINT LAYOUT
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
 
     //FINDBUGS JSR305
     implementation "com.google.code.findbugs:jsr305:$rootProject.findBugJsr305Version"
 
-    //TIMBER LOGGER
-    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
-
-    //BUTTER KNIFE
-    implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
-
-    //GUAVA
-    implementation "com.google.guava:guava:$rootProject.guavaAndroidVersion"
-
-    //RX JAVA & ANDROID
+    //RX JAVA
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
 
@@ -123,6 +122,90 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
     implementation "com.jakewharton.rxbinding2:rxbinding-design:$rootProject.rxBindingVersion"
     implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$rootProject.rxBindingVersion"
+
+    //TIMBER LOGGER
+    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
+    //DAGGER 2
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+
+    //BUTTER KNIFE
+    implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+
+    //EVENT BUS
+    implementation "org.greenrobot:eventbus:$rootProject.eventBusVersion"
+
+    //AUTO VALUE
+    compileOnly "com.google.auto.value:auto-value:$rootProject.autoValueVersion"
+    annotationProcessor "com.google.auto.value:auto-value:$rootProject.autoValueVersion"
+
+    //AUTO PARCEL
+    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.autoParcelVersion"
+
+    //AUTO VALUE GSON
+    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$rootProject.autoValueGsonExtension"
+    provided "com.ryanharter.auto.value:auto-value-gson:$rootProject.autoValueGsonExtension"
+
+    //LEAK CANARY
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakCanaryVersion"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
+
+    //BLOCK CANARY
+    implementation "com.github.markzhai:blockcanary-android:$rootProject.blockCanaryVersion"
+
+    //DART
+    implementation "com.f2prateek.dart:dart:$rootProject.dartVersion"
+    annotationProcessor "com.f2prateek.dart:dart-processor:$rootProject.dartVersion"
+
+    //HENSON
+    implementation "com.f2prateek.dart:henson:$rootProject.hensonVersion"
+    annotationProcessor "com.f2prateek.dart:henson-processor:$rootProject.hensonVersion"
+
+    //LIFE CYCLE EXTENSIONS
+    implementation "android.arch.lifecycle:extensions:$rootProject.architectureComponentVersion"
+
+    //LIFE CYCLE JAVA 8
+    implementation "android.arch.lifecycle:common-java8:$rootProject.architectureComponentVersion"
+
+    //LIVE DATA BACKGROUND TEST
+    testImplementation "android.arch.core:core-testing:$rootProject.architectureComponentVersion"
+
+    //LIVE DATA WITH REACTIVE STREAMS
+    implementation "android.arch.lifecycle:reactivestreams:$rootProject.architectureComponentVersion"
+
+    //ROOM
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomRuntimeVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomCompilerVersion"
+
+    //ROOM TEST MIGRATION
+    testImplementation "android.arch.persistence.room:testing:$rootProject.roomTestingVersion"
+
+    //ROOM RxJAVA
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.roomRxJavaVersion"
+
+    //PAGING
+    implementation "android.arch.paging:runtime:$rootProject.pagingVersion"
+
+    //RETROFIT
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+
+    //OkHttpInterceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttp3InterceptorVersion"
+
+    //GSON
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    //GSON CONVERTER
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.gsonConverterVersion"
+
+    //RX JAVA RETROFIT ADAPTER
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.rxJavaAdapterVersion"
+
+    //SERIAL
+    implementation "com.twitter.serial:serial:$rootProject.serialVersion"
 
     //MOCKITO
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"

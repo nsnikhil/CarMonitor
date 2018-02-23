@@ -52,19 +52,59 @@ ext {
 
     findBugJsr305Version = "3.0.2"
 
-    timberVersion = "4.6.0"
-
-    butterKnifeVersion = "8.8.1"
-
-    guavaAndroidVersion = "24.0-android"
-
     rxJavaVersion = "2.1.6"
 
     rxAndroidVersion = "2.0.1"
 
     rxBindingVersion = "2.0.0"
 
+    timberVersion = "4.6.0"
+
+    daggerVersion = "2.12"
+
+    butterKnifeVersion = "8.8.1"
+
+    eventBusVersion = "3.1.1"
+
+    autoValueVersion = "1.5.2"
+
+    autoParcelVersion = "0.2.5"
+
+    autoValueGsonExtension = "0.7.0"
+
+    leakCanaryVersion = "1.5.4"
+
+    blockCanaryVersion = "1.5.0"
+
+    dartVersion = "2.0.2"
+
+    hensonVersion = "2.0.2"
+
+    architectureComponentVersion = "1.1.0"
+
+    roomCompilerVersion = "1.0.0"
+
+    roomRuntimeVersion = "1.0.0"
+
+    roomRxJavaVersion = "1.0.0"
+
+    roomTestingVersion = "1.0.0"
+
+    pagingVersion = "1.0.0-alpha5"
+
+    serialVersion = "0.1.4"
+
     mockitoVersion = "2.11.0"
+
+    retrofitVersion = "2.3.0"
+
+    gsonVersion = "2.8.2"
+
+    gsonConverterVersion = "2.3.0"
+
+    rxJavaAdapterVersion = "2.3.0"
+
+    okHttp3InterceptorVersion = "3.9.1"
 
     jetBrainsAnnotationVersion = "13.0"
 
