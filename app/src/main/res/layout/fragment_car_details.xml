@@ -1,0 +1,56 @@
+<!--
+  ~    Copyright 2018 nsnikhil
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/matchParent"
+    android:padding="@dimen/eight"
+    tools:context="com.nsnik.nrs.carmonitor.views.fragments.CarDetailsFragment">
+
+    <TextView
+        android:id="@+id/detailsCarNumber"
+        style="@style/warpContent"
+        android:text="@string/app_name"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@id/detailsMethaneLevel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/detailsMethaneLevel"
+        style="@style/warpContent"
+        android:text="@string/gasMethane"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/detailsCarbonMonoxideLevel"
+        app:layout_constraintTop_toBottomOf="@id/detailsCarNumber" />
+
+    <TextView
+        android:id="@+id/detailsCarbonMonoxideLevel"
+        style="@style/warpContent"
+        android:text="@string/gasCarbonMonoxide"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/detailsNitrogenLevel"
+        app:layout_constraintTop_toBottomOf="@id/detailsMethaneLevel" />
+
+    <TextView
+        android:id="@+id/detailsNitrogenLevel"
+        style="@style/warpContent"
+        android:text="@string/gasNitrogen"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detailsCarbonMonoxideLevel" />
+
+</android.support.constraint.ConstraintLayout>

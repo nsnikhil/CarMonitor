@@ -33,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetworkModule {
 
-    private static final String BASE_URL = "NA";
+    private static final String BASE_URL = "https://127.0.0.1";
 
     @Contract(pure = true)
     @Provides

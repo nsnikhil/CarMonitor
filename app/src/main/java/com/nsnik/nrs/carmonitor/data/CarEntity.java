@@ -17,12 +17,24 @@
 package com.nsnik.nrs.carmonitor.data;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.twitter.serial.serializer.ObjectSerializer;
+import com.twitter.serial.serializer.SerializationContext;
+import com.twitter.serial.stream.SerializerInput;
+import com.twitter.serial.stream.SerializerOutput;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.IOException;
 
 @Entity
 public class CarEntity {
+
+    @Ignore
+    public static final ObjectSerializer<CarEntity> SERIALIZER = new CarEntityObjectSerializer();
 
     @NotNull
     @PrimaryKey
@@ -61,6 +73,29 @@ public class CarEntity {
 
     public void setNitrogenLevel(double nitrogenLevel) {
         this.mNitrogenLevel = nitrogenLevel;
+    }
+
+
+    private static final class CarEntityObjectSerializer extends ObjectSerializer<CarEntity> {
+
+        @Override
+        protected void serializeObject(@NotNull SerializationContext context, @NotNull SerializerOutput output, @NotNull CarEntity object) throws IOException {
+            output.writeString(object.mCarNo);
+            output.writeDouble(object.mMethaneLevel);
+            output.writeDouble(object.mCarbonMonoxideLevel);
+            output.writeDouble(object.mNitrogenLevel);
+        }
+
+        @Nullable
+        @Override
+        protected CarEntity deserializeObject(@NotNull SerializationContext context, @NotNull SerializerInput input, int versionNumber) throws IOException, ClassNotFoundException {
+            final CarEntity carEntity = new CarEntity();
+            carEntity.setCarNo(input.readString());
+            carEntity.setMethaneLevel(input.readDouble());
+            carEntity.setCarbonMonoxideLevel(input.readDouble());
+            carEntity.setNitrogenLevel(input.readDouble());
+            return carEntity;
+        }
     }
 
 }

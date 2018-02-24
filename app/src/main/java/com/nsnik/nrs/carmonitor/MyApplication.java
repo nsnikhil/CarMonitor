@@ -22,11 +22,13 @@ import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.github.moduth.blockcanary.BlockCanary;
 import com.nsnik.nrs.carmonitor.dagger.components.DaggerDatabaseComponent;
 import com.nsnik.nrs.carmonitor.dagger.components.DaggerNetworkComponent;
 import com.nsnik.nrs.carmonitor.dagger.components.DatabaseComponent;
 import com.nsnik.nrs.carmonitor.dagger.components.NetworkComponent;
 import com.nsnik.nrs.carmonitor.dagger.modules.ContextModule;
+import com.nsnik.nrs.carmonitor.util.AppBlockCanaryContext;
 import com.nsnik.nrs.carmonitor.util.DbUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -34,7 +36,7 @@ import com.squareup.leakcanary.RefWatcher;
 import retrofit2.Retrofit;
 import timber.log.Timber;
 
-public class MyApplication extends Application{
+public class MyApplication extends Application {
 
     static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -61,6 +63,7 @@ public class MyApplication extends Application{
                     return super.createStackElementTag(element) + ":" + element.getLineNumber();
                 }
             });
+            refWatcher = LeakCanary.install(this);
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectAll()
                     .penaltyLog()
@@ -73,6 +76,7 @@ public class MyApplication extends Application{
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
+        BlockCanary.install(this, new AppBlockCanaryContext()).start();
         moduleSetter();
     }
 
@@ -82,6 +86,7 @@ public class MyApplication extends Application{
     private void moduleSetter() {
         setContextModule();
         setNetworkModule();
+        setDatabaseComponent();
     }
 
     private void setContextModule() {

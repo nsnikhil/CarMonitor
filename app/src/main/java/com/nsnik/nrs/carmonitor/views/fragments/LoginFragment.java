@@ -17,6 +17,9 @@
 package com.nsnik.nrs.carmonitor.views.fragments;
 
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -25,10 +28,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.nsnik.nrs.carmonitor.R;
+import com.nsnik.nrs.carmonitor.data.CarEntity;
+import com.nsnik.nrs.carmonitor.data.UserEntity;
+import com.nsnik.nrs.carmonitor.viewModel.CarViewModel;
+import com.nsnik.nrs.carmonitor.viewModel.UserViewModel;
+import com.nsnik.nrs.carmonitor.views.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +57,10 @@ public class LoginFragment extends Fragment {
 
     private Unbinder mUnbinder;
     private CompositeDisposable mCompositeDisposable;
+    private CarViewModel mCarViewModel;
+    private UserViewModel mUserViewModel;
+
+    private Resources mResources;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +72,52 @@ public class LoginFragment extends Fragment {
 
     private void initialize() {
         mCompositeDisposable = new CompositeDisposable();
-        mCompositeDisposable.add(RxView.clicks(mFormSubmit).subscribe(v -> Toast.makeText(getActivity(), "test", Toast.LENGTH_SHORT).show(), throwable -> Timber.d(throwable.getMessage())));
+        if (getActivity() != null) mResources = getActivity().getResources();
+
+        mCarViewModel = ViewModelProviders.of(this).get(CarViewModel.class);
+        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+
+        mCompositeDisposable.add(RxView.clicks(mFormSubmit).subscribe(v -> insertIntoDatabase(), throwable -> Timber.d(throwable.getMessage())));
+    }
+
+    private void insertIntoDatabase() {
+        if (verifyFields()) {
+
+            UserEntity userEntity = new UserEntity();
+            userEntity.setPhoneNo(Double.parseDouble(mFormPhone.getText().toString()));
+            userEntity.setUserName(mFormName.getText().toString());
+
+            CarEntity carEntity = new CarEntity();
+            carEntity.setCarNo(mFormCarNo.getText().toString());
+            carEntity.setCarbonMonoxideLevel(0.00);
+            carEntity.setMethaneLevel(0.00);
+            carEntity.setNitrogenLevel(0.00);
+
+            mUserViewModel.insertUser(userEntity);
+            mCarViewModel.insertCar(carEntity);
+
+            if (getActivity() != null) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        }
+    }
+
+    private boolean verifyFields() {
+        if (mFormName.getText().toString().isEmpty()) {
+            mFormName.setError(mResources.getString(R.string.formErrorName));
+            return false;
+        }
+        if (mFormPhone.getText().toString().isEmpty()) {
+            mFormPhone.setError(mResources.getString(R.string.formErrorPhone));
+            return false;
+        }
+        if (mFormCarNo.getText().toString().isEmpty()) {
+            mFormCarNo.setError(mResources.getString(R.string.formErrorCarNo));
+            return false;
+        }
+        return true;
     }
 
     private void cleanUp() {

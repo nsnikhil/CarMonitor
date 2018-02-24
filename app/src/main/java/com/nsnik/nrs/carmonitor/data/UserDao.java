@@ -33,7 +33,7 @@ public interface UserDao {
     LiveData<List<UserEntity>> getUserList();
 
     @Query("SELECT * FROM UserEntity WHERE mPhoneNo = :phoneNo")
-    LiveData<UserEntity> getUserFromPhoneNo(int phoneNo);
+    LiveData<UserEntity> getUserFromPhoneNo(double phoneNo);
 
     @Query("SELECT * FROM UserEntity WHERE mUserName = :userName")
     LiveData<List<UserEntity>> getUserByName(String userName);
@@ -45,7 +45,7 @@ public interface UserDao {
     void deleteUsers(UserEntity... userEntities);
 
     @Query("DELETE FROM UserEntity WHERE mPhoneNo = :phoneNo")
-    void deleteUserByPhoneNo(int phoneNo);
+    void deleteUserByPhoneNo(double phoneNo);
 
     @Query("DELETE FROM UserEntity WHERE mUserName = :userName")
     void deleteUsersByName(String userName);

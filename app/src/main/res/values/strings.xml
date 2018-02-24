@@ -17,10 +17,29 @@
 <resources>
     <string name="app_name">Car Monitor</string>
 
-    <!-- from-->
+    <!-- form-->
     <string name="form_name">Name</string>
     <string name="form_phone">Phone no</string>
     <string name="form_car_no">Car no</string>
+    <!-- -->
+
+    <!-- formError-->
+    <string name="formErrorName">we need your full name to proceed</string>
+    <string name="formErrorPhone">we need your contact details to proceed</string>
+    <string name="formErrorCarNo">we need your car no proceed</string>
+
+    <!-- gasName-->
+    <string name="gasMethane">Methane</string>
+    <string name="gasCarbonMonoxide">CarbonMonoxide</string>
+    <string name="gasNitrogen">Nitrogen</string>
+    <!-- -->
+
+    <!-- bundle-->
+    <string name="bundleCarObject">bundleCarObject</string>
+    <string name="bundleCarNumber">bundleCarNumber</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- -->
 
 </resources>

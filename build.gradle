@@ -92,7 +92,7 @@ ext {
 
     pagingVersion = "1.0.0-alpha5"
 
-    serialVersion = "0.1.4"
+    serialVersion = "0.1.5"
 
     mockitoVersion = "2.11.0"
 

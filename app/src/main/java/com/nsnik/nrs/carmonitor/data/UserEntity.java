@@ -17,20 +17,34 @@
 package com.nsnik.nrs.carmonitor.data;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+
+import com.twitter.serial.serializer.ObjectSerializer;
+import com.twitter.serial.serializer.SerializationContext;
+import com.twitter.serial.stream.SerializerInput;
+import com.twitter.serial.stream.SerializerOutput;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.IOException;
 
 @Entity
 public class UserEntity {
 
+    @Ignore
+    public static final ObjectSerializer<UserEntity> SERIALIZER = new UserEntityObjectSerializer();
+
     @PrimaryKey
-    private int mPhoneNo;
+    private double mPhoneNo;
     private String mUserName;
 
-    public int getPhoneNo() {
+    public double getPhoneNo() {
         return mPhoneNo;
     }
 
-    public void setPhoneNo(int phoneNo) {
+    public void setPhoneNo(double phoneNo) {
         this.mPhoneNo = phoneNo;
     }
 
@@ -40,5 +54,23 @@ public class UserEntity {
 
     public void setUserName(String userName) {
         this.mUserName = userName;
+    }
+
+    private static final class UserEntityObjectSerializer extends ObjectSerializer<UserEntity> {
+
+        @Override
+        protected void serializeObject(@NotNull SerializationContext context, @NotNull SerializerOutput output, @NotNull UserEntity object) throws IOException {
+            output.writeDouble(object.mPhoneNo);
+            output.writeString(object.mUserName);
+        }
+
+        @Nullable
+        @Override
+        protected UserEntity deserializeObject(@NotNull SerializationContext context, @NotNull SerializerInput input, int versionNumber) throws IOException, ClassNotFoundException {
+            final UserEntity userEntity = new UserEntity();
+            userEntity.setPhoneNo(input.readDouble());
+            userEntity.setUserName(input.readString());
+            return userEntity;
+        }
     }
 }
