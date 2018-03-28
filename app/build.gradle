@@ -2,9 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.nsnik.nrs.carmonitor"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -91,7 +92,7 @@ android.applicationVariants.all { variant ->
 }*/
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     //APPCOMPAT LIBRARY
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibVersion"
@@ -110,9 +111,6 @@ dependencies {
 
     //CARD VIEW
     implementation "com.android.support:cardview-v7:$rootProject.supportLibVersion"
-
-    //PALETTE
-    implementation "com.android.support:palette-v7:$rootProject.supportLibVersion"
 
     //FINDBUGS JSR305
     implementation "com.google.code.findbugs:jsr305:$rootProject.findBugJsr305Version"
@@ -134,7 +132,6 @@ dependencies {
     //DAGGER 2
     implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
-    implementation 'com.android.support:support-v4:27.0.2'
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
 
     //BUTTER KNIFE
@@ -144,31 +141,12 @@ dependencies {
     //EVENT BUS
     implementation "org.greenrobot:eventbus:$rootProject.eventBusVersion"
 
-    //AUTO VALUE
-    compileOnly "com.google.auto.value:auto-value:$rootProject.autoValueVersion"
-    annotationProcessor "com.google.auto.value:auto-value:$rootProject.autoValueVersion"
-
-    //AUTO PARCEL
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.autoParcelVersion"
-
-    //AUTO VALUE GSON
-    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$rootProject.autoValueGsonExtension"
-    provided "com.ryanharter.auto.value:auto-value-gson:$rootProject.autoValueGsonExtension"
-
     //LEAK CANARY
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakCanaryVersion"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakCanaryVersion"
 
     //BLOCK CANARY
     implementation "com.github.markzhai:blockcanary-android:$rootProject.blockCanaryVersion"
-
-    //DART
-    implementation "com.f2prateek.dart:dart:$rootProject.dartVersion"
-    annotationProcessor "com.f2prateek.dart:dart-processor:$rootProject.dartVersion"
-
-    //HENSON
-    implementation "com.f2prateek.dart:henson:$rootProject.hensonVersion"
-    annotationProcessor "com.f2prateek.dart:henson-processor:$rootProject.hensonVersion"
 
     //LIFE CYCLE EXTENSIONS
     implementation "android.arch.lifecycle:extensions:$rootProject.architectureComponentVersion"
@@ -232,6 +210,7 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
     androidTestImplementation "com.android.support.test.espresso.idling:idling-concurrent:$rootProject.espressoVersion"
+
     //androidTestImplementation "com.android.support.test.espresso:espresso-accessibility:$rootProject.espressoVersion"
     implementation "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
 

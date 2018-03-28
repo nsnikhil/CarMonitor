@@ -33,7 +33,6 @@ public class UserViewModel extends AndroidViewModel {
     private final DbUtil mDbUtil;
     private LiveData<List<UserEntity>> mUserList;
 
-
     public UserViewModel(@NonNull Application application) {
         super(application);
         mDbUtil = ((MyApplication) application).getDbUtil();

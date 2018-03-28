@@ -16,6 +16,16 @@
 
 package com.nsnik.nrs.carmonitor.util;
 
+import com.nsnik.nrs.carmonitor.data.CarEntity;
+
+import java.util.List;
+
+import io.reactivex.Single;
+import retrofit2.http.GET;
+
 public interface DemoRetrofitService {
+
+    @GET("/php/readAllCar.php")
+    Single<List<CarEntity>> getCarList();
 
 }

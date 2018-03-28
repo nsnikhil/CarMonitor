@@ -37,7 +37,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mUnbinder = ButterKnife.bind(this, view);
+        initialize();
         return view;
+    }
+
+    private void initialize() {
+        if (getFragmentManager() != null)
+            getFragmentManager().beginTransaction().add(R.id.homeContainer, new CarListFragment()).commit();
     }
 
     private void cleanUp() {

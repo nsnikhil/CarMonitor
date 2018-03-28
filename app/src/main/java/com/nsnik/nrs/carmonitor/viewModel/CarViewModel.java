@@ -20,23 +20,28 @@ package com.nsnik.nrs.carmonitor.viewModel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.nsnik.nrs.carmonitor.MyApplication;
 import com.nsnik.nrs.carmonitor.data.CarEntity;
 import com.nsnik.nrs.carmonitor.util.DbUtil;
+import com.nsnik.nrs.carmonitor.util.NetworkUtil;
 
 import java.util.List;
 
 public class CarViewModel extends AndroidViewModel {
 
+    private final NetworkUtil mNetworkUtil;
     private final DbUtil mDbUtil;
-    private LiveData<List<CarEntity>> mCarList;
+    private MutableLiveData<List<CarEntity>> mCarList;
 
     public CarViewModel(@NonNull Application application) {
         super(application);
+        mNetworkUtil = ((MyApplication) application).getNetworkUtil();
         mDbUtil = ((MyApplication) application).getDbUtil();
-        mCarList = mDbUtil.getCarList();
+        mNetworkUtil.getDemoListServer();
+        mCarList = mNetworkUtil.getCarList();
     }
 
     public LiveData<List<CarEntity>> getCarList() {

@@ -19,14 +19,15 @@ package com.nsnik.nrs.carmonitor.data;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
 import com.twitter.serial.serializer.ObjectSerializer;
 import com.twitter.serial.serializer.SerializationContext;
 import com.twitter.serial.stream.SerializerInput;
 import com.twitter.serial.stream.SerializerOutput;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
@@ -38,9 +39,13 @@ public class CarEntity {
 
     @NotNull
     @PrimaryKey
+    @SerializedName("carno")
     private String mCarNo;
+    @SerializedName("meval")
     private double mMethaneLevel;
+    @SerializedName("coval")
     private double mCarbonMonoxideLevel;
+    @SerializedName("noval")
     private double mNitrogenLevel;
 
     public String getCarNo() {
@@ -86,9 +91,9 @@ public class CarEntity {
             output.writeDouble(object.mNitrogenLevel);
         }
 
-        @Nullable
+        @NonNull
         @Override
-        protected CarEntity deserializeObject(@NotNull SerializationContext context, @NotNull SerializerInput input, int versionNumber) throws IOException, ClassNotFoundException {
+        protected CarEntity deserializeObject(@NotNull SerializationContext context, @NotNull SerializerInput input, int versionNumber) throws IOException {
             final CarEntity carEntity = new CarEntity();
             carEntity.setCarNo(input.readString());
             carEntity.setMethaneLevel(input.readDouble());

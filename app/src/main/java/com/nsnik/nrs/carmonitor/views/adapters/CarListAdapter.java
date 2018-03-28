@@ -17,18 +17,17 @@
 package com.nsnik.nrs.carmonitor.views.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.nsnik.nrs.carmonitor.R;
 import com.nsnik.nrs.carmonitor.data.CarEntity;
-import com.nsnik.nrs.carmonitor.views.MainActivity;
-import com.nsnik.nrs.carmonitor.views.fragments.CarDetailsFragment;
 
 import java.util.List;
 
@@ -50,13 +49,14 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.MyViewHo
         mCompositeDisposable = new CompositeDisposable();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.car_list_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final CarEntity carEntity = mCarList.get(position);
         holder.mCarNo.setText(carEntity.getCarNo());
     }
@@ -77,7 +77,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.MyViewHo
     }
 
     @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         cleanUp();
         super.onDetachedFromRecyclerView(recyclerView);
     }
@@ -92,13 +92,9 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.MyViewHo
             ButterKnife.bind(this, itemView);
             mCompositeDisposable.add(RxView.clicks(itemView).subscribe(v -> {
                 if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                    final com.twitter.serial.stream.legacy.LegacySerial serial = new com.twitter.serial.stream.legacy.LegacySerial();
-                    final byte[] serializedData = serial.toByteArray(mCarList.get(getAdapterPosition()), CarEntity.SERIALIZER);
-                    final Bundle bundle = new Bundle();
-                    bundle.putByteArray(mContext.getResources().getString(R.string.bundleCarObject), serializedData);
-                    ((MainActivity) mContext).replaceFragment(new CarDetailsFragment(), 2, bundle);
+                    Toast.makeText(mContext, mCarList.get(getAdapterPosition()).getCarNo(), Toast.LENGTH_SHORT).show();
                 }
-            }, throwable -> Timber.d(throwable.getMessage())));
+            }, Timber::d));
         }
     }
 }

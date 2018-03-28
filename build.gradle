@@ -14,8 +14,6 @@
  *    limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     
     repositories {
@@ -23,11 +21,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.android.tools.build:gradle:3.1.0'
     }
 }
 
@@ -44,31 +38,31 @@ task clean(type: Delete) {
 
 ext {
 
-    buildToolsVersion = "27.0.2"
+    buildToolsVersion = "27.0.3"
 
-    supportLibVersion = "27.0.2"
+    supportLibVersion = "27.1.0"
 
-    constraintLayoutVersion = "1.1.0-beta5"
+    constraintLayoutVersion = "1.1.0-beta6"
 
     findBugJsr305Version = "3.0.2"
 
-    rxJavaVersion = "2.1.6"
+    rxJavaVersion = "2.1.12"
 
-    rxAndroidVersion = "2.0.1"
+    rxAndroidVersion = "2.0.2"
 
-    rxBindingVersion = "2.0.0"
+    rxBindingVersion = "2.1.1"
 
-    timberVersion = "4.6.0"
+    timberVersion = "4.7.0"
 
-    daggerVersion = "2.12"
+    daggerVersion = "2.15"
 
     butterKnifeVersion = "8.8.1"
 
     eventBusVersion = "3.1.1"
 
-    autoValueVersion = "1.5.2"
+    autoValueVersion = "1.6"
 
-    autoParcelVersion = "0.2.5"
+    autoParcelVersion = "0.2.6"
 
     autoValueGsonExtension = "0.7.0"
 
@@ -76,11 +70,11 @@ ext {
 
     blockCanaryVersion = "1.5.0"
 
-    dartVersion = "2.0.2"
+    dartVersion = "3.0.0-RC6"
 
-    hensonVersion = "2.0.2"
+    hensonVersion = "3.0.0-RC6"
 
-    architectureComponentVersion = "1.1.0"
+    architectureComponentVersion = "1.1.1"
 
     roomCompilerVersion = "1.0.0"
 
@@ -90,23 +84,23 @@ ext {
 
     roomTestingVersion = "1.0.0"
 
-    pagingVersion = "1.0.0-alpha5"
+    pagingVersion = "1.0.0-alpha7"
 
-    serialVersion = "0.1.5"
+    serialVersion = "0.1.6"
 
-    mockitoVersion = "2.11.0"
+    mockitoVersion = "2.16.0"
 
     retrofitVersion = "2.3.0"
 
     gsonVersion = "2.8.2"
 
-    gsonConverterVersion = "2.3.0"
+    gsonConverterVersion = "2.4.0"
 
-    rxJavaAdapterVersion = "2.3.0"
+    rxJavaAdapterVersion = "2.4.0"
 
-    okHttp3InterceptorVersion = "3.9.1"
+    okHttp3InterceptorVersion = "3.10.0"
 
-    jetBrainsAnnotationVersion = "13.0"
+    jetBrainsAnnotationVersion = "16.0.1"
 
     jUnitVersion = "4.12"
 
@@ -118,5 +112,5 @@ ext {
 
     espressoVersion = "3.0.1"
 
-    roboElectricVersion = "3.5.1"
+    roboElectricVersion = "3.8"
 }

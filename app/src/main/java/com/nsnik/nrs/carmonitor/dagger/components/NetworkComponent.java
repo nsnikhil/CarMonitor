@@ -17,11 +17,13 @@
 package com.nsnik.nrs.carmonitor.dagger.components;
 
 import com.nsnik.nrs.carmonitor.dagger.modules.NetworkModule;
+import com.nsnik.nrs.carmonitor.dagger.scopes.ApplicationScope;
+import com.nsnik.nrs.carmonitor.util.NetworkUtil;
 
 import dagger.Component;
-import retrofit2.Retrofit;
 
+@ApplicationScope
 @Component(modules = NetworkModule.class)
 public interface NetworkComponent {
-    Retrofit getRetrofit();
+    NetworkUtil getNetworkUtil();
 }

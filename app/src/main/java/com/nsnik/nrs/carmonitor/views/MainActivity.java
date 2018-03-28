@@ -16,7 +16,6 @@
 
 package com.nsnik.nrs.carmonitor.views;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,9 +29,7 @@ import com.nsnik.nrs.carmonitor.BuildConfig;
 import com.nsnik.nrs.carmonitor.MyApplication;
 import com.nsnik.nrs.carmonitor.R;
 import com.nsnik.nrs.carmonitor.util.SimpleIdlingResource;
-import com.nsnik.nrs.carmonitor.viewModel.CarViewModel;
-import com.nsnik.nrs.carmonitor.views.fragments.CarListFragment;
-import com.nsnik.nrs.carmonitor.views.fragments.LoginFragment;
+import com.nsnik.nrs.carmonitor.views.fragments.HomeFragment;
 import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.BindView;
@@ -40,10 +37,9 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String[] FRAGMENT_TAGS = {"login", "carList", "carDetails"};
+    private static final String[] FRAGMENT_TAGS = {"login", "home", "carList", "carDetails"};
     @BindView(R.id.mainToolbar)
     Toolbar mMainToolbar;
-    private CarViewModel mCarViewModel;
     @Nullable
     private SimpleIdlingResource mIdlingResource;
 
@@ -57,15 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialize() {
         setSupportActionBar(mMainToolbar);
-        mCarViewModel = ViewModelProviders.of(this).get(CarViewModel.class);
-
-        mCarViewModel.getCarList().observe(this, carEntities -> {
-            if (carEntities != null)
-                if (carEntities.size() <= 0)
-                    getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new LoginFragment(), FRAGMENT_TAGS[0]).commit();
-                else
-                    getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new CarListFragment(), FRAGMENT_TAGS[1]).commit();
-        });
+        getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new HomeFragment(), FRAGMENT_TAGS[1]).commit();
     }
 
     @VisibleForTesting

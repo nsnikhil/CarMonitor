@@ -30,10 +30,10 @@ import com.nsnik.nrs.carmonitor.dagger.components.NetworkComponent;
 import com.nsnik.nrs.carmonitor.dagger.modules.ContextModule;
 import com.nsnik.nrs.carmonitor.util.AppBlockCanaryContext;
 import com.nsnik.nrs.carmonitor.util.DbUtil;
+import com.nsnik.nrs.carmonitor.util.NetworkUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import retrofit2.Retrofit;
 import timber.log.Timber;
 
 public class MyApplication extends Application {
@@ -42,10 +42,10 @@ public class MyApplication extends Application {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
+    private NetworkUtil mNetworkUtil;
     private RefWatcher refWatcher;
     private ContextModule mContextModule;
     private DbUtil mDbUtil;
-    private Retrofit mRetrofitClient;
 
     public static RefWatcher getRefWatcher(@NonNull Context context) {
         MyApplication application = (MyApplication) context.getApplicationContext();
@@ -93,22 +93,24 @@ public class MyApplication extends Application {
         mContextModule = new ContextModule(this);
     }
 
-    private void setNetworkModule() {
-        NetworkComponent networkComponent = DaggerNetworkComponent.create();
-        mRetrofitClient = networkComponent.getRetrofit();
-    }
 
     private void setDatabaseComponent() {
         DatabaseComponent databaseComponent = DaggerDatabaseComponent.builder().contextModule(mContextModule).build();
         mDbUtil = databaseComponent.getDbUtil();
     }
 
-    public Retrofit getRetrofitClient() {
-        return mRetrofitClient;
+    private void setNetworkModule() {
+        NetworkComponent networkComponent = DaggerNetworkComponent.create();
+        mNetworkUtil = networkComponent.getNetworkUtil();
     }
+
 
     public DbUtil getDbUtil() {
         return mDbUtil;
+    }
+
+    public NetworkUtil getNetworkUtil() {
+        return mNetworkUtil;
     }
 
 }

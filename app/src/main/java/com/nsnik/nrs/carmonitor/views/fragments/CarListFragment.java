@@ -38,6 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 public class CarListFragment extends Fragment {
 
@@ -69,6 +70,7 @@ public class CarListFragment extends Fragment {
     }
 
     private void modifyList(List<CarEntity> carList) {
+        Timber.d(String.valueOf(carList.size()));
         mCarList = carList;
         mListAdapter.modifyList(mCarList);
     }
