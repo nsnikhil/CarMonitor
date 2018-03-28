@@ -186,7 +186,7 @@ public class DbUtil {
 
             @Override
             public void onError(Throwable e) {
-                Timber.d(e.getMessage());
+                Timber.d(e);
             }
         });
     }
@@ -252,7 +252,7 @@ public class DbUtil {
 
             @Override
             public void onError(Throwable e) {
-                Timber.d(e.getMessage());
+                Timber.d(e);
             }
         });
     }

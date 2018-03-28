@@ -23,11 +23,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.nsnik.nrs.carmonitor.R;
 import com.nsnik.nrs.carmonitor.data.CarEntity;
+import com.nsnik.nrs.carmonitor.util.events.GotoDetailsEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -92,7 +94,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.MyViewHo
             ButterKnife.bind(this, itemView);
             mCompositeDisposable.add(RxView.clicks(itemView).subscribe(v -> {
                 if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                    Toast.makeText(mContext, mCarList.get(getAdapterPosition()).getCarNo(), Toast.LENGTH_SHORT).show();
+                    EventBus.getDefault().post(new GotoDetailsEvent(mCarList.get(getAdapterPosition())));
                 }
             }, Timber::d));
         }

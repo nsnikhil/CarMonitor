@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "12b86a6dcfb3031a247a7ae91abf1b37",
+    "identityHash": "a6a0f76a7c54d0a0c382440315f17692",
     "entities": [
       {
         "tableName": "CarEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mCarNo` TEXT NOT NULL, `mMethaneLevel` REAL NOT NULL, `mCarbonMonoxideLevel` REAL NOT NULL, `mNitrogenLevel` REAL NOT NULL, PRIMARY KEY(`mCarNo`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mCarNo` TEXT NOT NULL, `mMethaneLevel` REAL NOT NULL, `mCarbonMonoxideLevel` REAL NOT NULL, `mNitrogenLevel` REAL NOT NULL, `mCoordinates` TEXT, `mPhone` TEXT, `mAccident` TEXT, PRIMARY KEY(`mCarNo`))",
         "fields": [
           {
             "fieldPath": "mCarNo",
@@ -31,6 +31,24 @@
             "columnName": "mNitrogenLevel",
             "affinity": "REAL",
             "notNull": true
+          },
+          {
+            "fieldPath": "mCoordinates",
+            "columnName": "mCoordinates",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mPhone",
+            "columnName": "mPhone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mAccident",
+            "columnName": "mAccident",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -71,7 +89,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"12b86a6dcfb3031a247a7ae91abf1b37\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a6a0f76a7c54d0a0c382440315f17692\")"
     ]
   }
 }

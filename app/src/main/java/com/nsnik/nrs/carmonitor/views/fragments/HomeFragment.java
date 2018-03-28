@@ -25,6 +25,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nsnik.nrs.carmonitor.R;
+import com.nsnik.nrs.carmonitor.data.CarEntity;
+import com.nsnik.nrs.carmonitor.util.events.GotoDetailsEvent;
+import com.twitter.serial.stream.legacy.LegacySerial;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.io.IOException;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -44,6 +52,44 @@ public class HomeFragment extends Fragment {
     private void initialize() {
         if (getFragmentManager() != null)
             getFragmentManager().beginTransaction().add(R.id.homeContainer, new CarListFragment()).commit();
+    }
+
+    public void replaceFragment(CarEntity carEntity) {
+        if (getFragmentManager() == null && getActivity() == null)
+            return;
+        final CarDetailsFragment fragment = new CarDetailsFragment();
+        final Bundle bundle = new Bundle();
+        final LegacySerial serial = new LegacySerial();
+        try {
+            final byte[] serializedEntity = serial.toByteArray(carEntity, CarEntity.SERIALIZER);
+            bundle.putByteArray(getActivity().getResources().getString(R.string.bundleCarObject), serializedEntity);
+            fragment.setArguments(bundle);
+            getFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .replace(R.id.homeContainer, fragment)
+                    .addToBackStack("details")
+                    .commit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onGoToDetailEvent(GotoDetailsEvent gotoDetailsEvent) {
+        replaceFragment(gotoDetailsEvent.getCarEntity());
     }
 
     private void cleanUp() {

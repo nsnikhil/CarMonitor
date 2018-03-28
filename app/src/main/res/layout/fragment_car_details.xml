@@ -26,23 +26,35 @@
         style="@style/warpContent"
         android:text="@string/app_name"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@id/detailsMethaneLevel"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/detailsPhone"
+        style="@style/warpContent"
+        android:text="@string/detailPhone"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/detailsCarNumber" />
+
+    <TextView
+        android:id="@+id/detailsCoordinates"
+        style="@style/warpContent"
+        android:text="@string/detailCoordinates"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/detailsPhone" />
 
     <TextView
         android:id="@+id/detailsMethaneLevel"
         style="@style/warpContent"
         android:text="@string/gasMethane"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/detailsCarbonMonoxideLevel"
-        app:layout_constraintTop_toBottomOf="@id/detailsCarNumber" />
+        app:layout_constraintTop_toBottomOf="@id/detailsCoordinates" />
 
     <TextView
         android:id="@+id/detailsCarbonMonoxideLevel"
         style="@style/warpContent"
         android:text="@string/gasCarbonMonoxide"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/detailsNitrogenLevel"
         app:layout_constraintTop_toBottomOf="@id/detailsMethaneLevel" />
 
     <TextView
@@ -50,7 +62,14 @@
         style="@style/warpContent"
         android:text="@string/gasNitrogen"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detailsCarbonMonoxideLevel" />
+
+    <TextView
+        android:id="@+id/detailsAccident"
+        style="@style/warpContent"
+        android:text="@string/detailAccident"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/detailsNitrogenLevel" />
+
 
 </android.support.constraint.ConstraintLayout>

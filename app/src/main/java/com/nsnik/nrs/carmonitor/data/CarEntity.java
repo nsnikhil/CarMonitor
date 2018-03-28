@@ -47,6 +47,12 @@ public class CarEntity {
     private double mCarbonMonoxideLevel;
     @SerializedName("noval")
     private double mNitrogenLevel;
+    @SerializedName("coordinates")
+    private String mCoordinates;
+    @SerializedName("phone")
+    private String mPhone;
+    @SerializedName("accident")
+    private String mAccident;
 
     public String getCarNo() {
         return mCarNo;
@@ -80,6 +86,29 @@ public class CarEntity {
         this.mNitrogenLevel = nitrogenLevel;
     }
 
+    public String getCoordinates() {
+        return mCoordinates;
+    }
+
+    public void setCoordinates(String coordinates) {
+        this.mCoordinates = coordinates;
+    }
+
+    public String getPhone() {
+        return mPhone;
+    }
+
+    public void setPhone(String phone) {
+        this.mPhone = phone;
+    }
+
+    public String getAccident() {
+        return mAccident;
+    }
+
+    public void setAccident(String accident) {
+        this.mAccident = accident;
+    }
 
     private static final class CarEntityObjectSerializer extends ObjectSerializer<CarEntity> {
 
@@ -89,6 +118,9 @@ public class CarEntity {
             output.writeDouble(object.mMethaneLevel);
             output.writeDouble(object.mCarbonMonoxideLevel);
             output.writeDouble(object.mNitrogenLevel);
+            output.writeString(object.mCoordinates);
+            output.writeString(object.mPhone);
+            output.writeString(object.mAccident);
         }
 
         @NonNull
@@ -99,6 +131,9 @@ public class CarEntity {
             carEntity.setMethaneLevel(input.readDouble());
             carEntity.setCarbonMonoxideLevel(input.readDouble());
             carEntity.setNitrogenLevel(input.readDouble());
+            carEntity.setCoordinates(input.readString());
+            carEntity.setPhone(input.readString());
+            carEntity.setAccident(input.readString());
             return carEntity;
         }
     }
