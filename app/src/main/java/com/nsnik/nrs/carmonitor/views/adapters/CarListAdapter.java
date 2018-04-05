@@ -18,6 +18,7 @@ package com.nsnik.nrs.carmonitor.views.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,10 +90,13 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.MyViewHo
         @BindView(R.id.itemCarNo)
         TextView mCarNo;
 
+        @BindView(R.id.itemCard)
+        CardView mItemCard;
+
         MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            mCompositeDisposable.add(RxView.clicks(itemView).subscribe(v -> {
+            mCompositeDisposable.add(RxView.clicks(mItemCard).subscribe(v -> {
                 if (getAdapterPosition() != RecyclerView.NO_POSITION) {
                     EventBus.getDefault().post(new GotoDetailsEvent(mCarList.get(getAdapterPosition())));
                 }

@@ -44,6 +44,9 @@
     <!-- bundle-->
     <string name="bundleCarObject">bundleCarObject</string>
     <string name="bundleCarNumber">bundleCarNumber</string>
+    <string name="bundleLocation">bundleLocation</string>
     <!-- -->
+
+    <string name="google_maps_key">AIzaSyCLohj9F8k4SOH6IkUyYC-QqtfvnbKITug</string>
 
 </resources>

@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import com.nsnik.nrs.carmonitor.R;
 import com.nsnik.nrs.carmonitor.data.CarEntity;
 import com.nsnik.nrs.carmonitor.util.events.GotoDetailsEvent;
+import com.nsnik.nrs.carmonitor.util.events.OpenMapsEvent;
 import com.twitter.serial.stream.legacy.LegacySerial;
 
 import org.greenrobot.eventbus.EventBus;
@@ -75,6 +76,15 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    private void replaceFragment(Fragment fragment, String tag) {
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.homeContainer, fragment)
+                .addToBackStack(tag)
+                .commit();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -90,6 +100,17 @@ public class HomeFragment extends Fragment {
     @Subscribe
     public void onGoToDetailEvent(GotoDetailsEvent gotoDetailsEvent) {
         replaceFragment(gotoDetailsEvent.getCarEntity());
+    }
+
+    @Subscribe
+    public void onOpenMapsEvent(OpenMapsEvent openMapsEvent) {
+        if (getActivity() == null)
+            return;
+        final MapsFragment fragment = new MapsFragment();
+        final Bundle bundle = new Bundle();
+        bundle.putString(getActivity().getResources().getString(R.string.bundleLocation), openMapsEvent.getLocation());
+        fragment.setArguments(bundle);
+        replaceFragment(fragment, "maps");
     }
 
     private void cleanUp() {

@@ -17,15 +17,15 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/horizontal"
-    android:background="?selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?selectableItemBackground"
     android:padding="@dimen/eight">
 
     <android.support.v7.widget.CardView
         android:id="@+id/itemCard"
         android:layout_width="match_parent"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"
         android:layout_height="?listPreferredItemHeight"
         app:cardCornerRadius="2dp"
         app:cardElevation="0dp" />

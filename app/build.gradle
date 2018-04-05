@@ -115,6 +115,9 @@ dependencies {
     //FINDBUGS JSR305
     implementation "com.google.code.findbugs:jsr305:$rootProject.findBugJsr305Version"
 
+    //MAPS
+    implementation "com.google.android.gms:play-services-maps:$rootProject.gpsVersion"
+
     //RX JAVA
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"

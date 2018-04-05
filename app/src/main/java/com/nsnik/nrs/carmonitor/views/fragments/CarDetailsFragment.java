@@ -34,7 +34,11 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.nsnik.nrs.carmonitor.R;
 import com.nsnik.nrs.carmonitor.data.CarEntity;
+import com.nsnik.nrs.carmonitor.util.events.OpenMapsEvent;
 import com.twitter.serial.stream.legacy.LegacySerial;
+
+import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.Contract;
 
 import java.io.IOException;
 
@@ -99,6 +103,8 @@ public class CarDetailsFragment extends Fragment {
         mAccident.setText(mCarEntity.getAccident());
     }
 
+    @NonNull
+    @Contract(pure = true)
     private String makeString(String gasName, double gasValue) {
         return gasName + ": " + gasValue;
     }
@@ -110,24 +116,14 @@ public class CarDetailsFragment extends Fragment {
     }
 
     private void listeners() {
-        mCompositeDisposable.add(RxView.clicks(mCoordinates).subscribe(v -> {
-            openMaps(mCoordinates.getText().toString());
-        }, Timber::d));
-        mCompositeDisposable.add(RxView.clicks(mPhone).subscribe(v -> {
-            checkPermission(mPhone.getText().toString());
-        }, Timber::d));
+        mCompositeDisposable.add(RxView.clicks(mCoordinates).subscribe(v -> EventBus.getDefault().post(new OpenMapsEvent(mCoordinates.getText().toString())), Timber::d));
+        mCompositeDisposable.add(RxView.clicks(mPhone).subscribe(v -> checkPermission(mPhone.getText().toString()), Timber::d));
     }
 
-    private void openMaps(String location) {
-        Uri gmmIntentUri = Uri.parse("geo:" + location);
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (getActivity() != null && mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivity(mapIntent);
-        }
-    }
 
     private void checkPermission(String phoneNo) {
+        if (getActivity() == null)
+            return;
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_DENIED ||
                 ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, PERMISSION_REQUEST_CODE);
@@ -157,5 +153,4 @@ public class CarDetailsFragment extends Fragment {
         cleanUp();
         super.onDestroy();
     }
-
 }
