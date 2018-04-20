@@ -44,6 +44,8 @@
     <TextView
         android:id="@+id/detailsPhone"
         style="@style/warpContent"
+        android:layout_height="?listPreferredItemHeight"
+        android:gravity="center_vertical"
         android:drawablePadding="@dimen/eight"
         android:drawableStart="@drawable/phone"
         android:padding="@dimen/eight"
@@ -54,6 +56,8 @@
     <TextView
         android:id="@+id/detailsCoordinates"
         style="@style/warpContent"
+        android:layout_height="?listPreferredItemHeight"
+        android:gravity="center_vertical"
         android:drawablePadding="@dimen/eight"
         android:drawableStart="@drawable/location"
         android:padding="@dimen/eight"
@@ -64,6 +68,8 @@
     <TextView
         android:id="@+id/detailsMethaneLevel"
         style="@style/warpContent"
+        android:layout_height="?listPreferredItemHeight"
+        android:gravity="center_vertical"
         android:drawablePadding="@dimen/eight"
         android:drawableStart="@drawable/ele"
         android:padding="@dimen/eight"
@@ -74,6 +80,8 @@
     <TextView
         android:id="@+id/detailsCarbonMonoxideLevel"
         style="@style/warpContent"
+        android:layout_height="?listPreferredItemHeight"
+        android:gravity="center_vertical"
         android:drawablePadding="@dimen/eight"
         android:drawableStart="@drawable/ele"
         android:padding="@dimen/eight"
@@ -84,6 +92,8 @@
     <TextView
         android:id="@+id/detailsNitrogenLevel"
         style="@style/warpContent"
+        android:layout_height="?listPreferredItemHeight"
+        android:gravity="center_vertical"
         android:drawablePadding="@dimen/eight"
         android:drawableStart="@drawable/ele"
         android:padding="@dimen/eight"
@@ -94,8 +104,13 @@
     <TextView
         android:id="@+id/detailsAccident"
         style="@style/warpContent"
+        android:layout_height="?listPreferredItemHeight"
+        android:drawablePadding="@dimen/eight"
         android:text="@string/detailAccident"
-        android:textSize="16sp"
+        android:drawableStart="@drawable/alert"
+        android:gravity="center_vertical"
+        android:padding="@dimen/eight"
+        android:textSize="24sp"
         app:layout_constraintTop_toBottomOf="@id/detailsNitrogenLevel" />
 
 

@@ -16,6 +16,7 @@
 
 <resources>
     <string name="app_name">Car Monitor</string>
+    <string name="detailString"> %1$s : %2$.2f(in ppm)</string>
 
     <!-- form-->
     <string name="form_name">Name</string>
@@ -33,6 +34,7 @@
     <string name="detailCoordinates">0.0,0.0</string>
     <string name="detailPhone">(+91)8013410076</string>
     <string name="detailAccident">N/A</string>
+    <string name="detailNoAccident">No Accidents</string>
     <!-- -->
 
     <!-- gasName-->

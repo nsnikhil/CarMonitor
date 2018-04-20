@@ -14,12 +14,12 @@
   ~    limitations under the License.
   -->
 
-<resources>
-    <color name="colorPrimary">#F5F5F5</color>
-    <color name="colorPrimaryDark">#E0E0E0</color>
-    <color name="colorAccent">#212121</color>
-
-    <color name="materialRed">#D32F2F</color>
-    <color name="materialGreen">#00796B</color>
-
-</resources>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportHeight="24"
+    android:viewportWidth="24">
+    <path
+        android:fillColor="#000"
+        android:pathData="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z" />
+</vector>

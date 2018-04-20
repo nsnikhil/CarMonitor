@@ -100,13 +100,21 @@ public class CarDetailsFragment extends Fragment {
         mCarbonMonoxideLevel.setText(makeString(getActivity().getResources().getString(R.string.gasCarbonMonoxide), mCarEntity.getCarbonMonoxideLevel()));
         mNitrogenLevel.setText(makeString(getActivity().getResources().getString(R.string.gasNitrogen), mCarEntity.getNitrogenLevel()));
         mMethaneLevel.setText(makeString(getActivity().getResources().getString(R.string.gasMethane), mCarEntity.getMethaneLevel()));
-        mAccident.setText(mCarEntity.getAccident());
+        if (mCarEntity.getAccident().isEmpty()) {
+            mAccident.setTextColor(ContextCompat.getColor(getActivity(), R.color.materialGreen));
+            mAccident.setText(getActivity().getResources().getString(R.string.detailNoAccident));
+        } else {
+            mAccident.setTextColor(ContextCompat.getColor(getActivity(), R.color.materialRed));
+            mAccident.setText(mCarEntity.getAccident());
+        }
     }
 
     @NonNull
     @Contract(pure = true)
     private String makeString(String gasName, double gasValue) {
-        return gasName + ": " + gasValue;
+        if (getActivity() == null)
+            return "";
+        return getActivity().getResources().getString(R.string.detailString, gasName, gasValue);
     }
 
     private void initialize() {
