@@ -26,19 +26,21 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.jakewharton.rxbinding2.view.RxView;
 import com.nsnik.nrs.carmonitor.R;
 import com.nsnik.nrs.carmonitor.data.CarEntity;
-import com.nsnik.nrs.carmonitor.util.events.OpenMapsEvent;
+import com.nsnik.nrs.carmonitor.util.Utility;
+import com.nsnik.nrs.carmonitor.util.events.CallPersonEvent;
+import com.nsnik.nrs.carmonitor.views.adapters.CarDetailsAdapter;
 import com.twitter.serial.stream.legacy.LegacySerial;
 
 import org.greenrobot.eventbus.EventBus;
-import org.jetbrains.annotations.Contract;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
@@ -46,30 +48,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
-import timber.log.Timber;
 
 
 public class CarDetailsFragment extends Fragment {
 
-    @BindView(R.id.detailsCarNumber)
-    TextView mCarNo;
-    @BindView(R.id.detailsMethaneLevel)
-    TextView mMethaneLevel;
-    @BindView(R.id.detailsCarbonMonoxideLevel)
-    TextView mCarbonMonoxideLevel;
-    @BindView(R.id.detailsNitrogenLevel)
-    TextView mNitrogenLevel;
-    private static final int PERMISSION_REQUEST_CODE = 111;
-    @BindView(R.id.detailsCoordinates)
-    TextView mCoordinates;
-    @BindView(R.id.detailsPhone)
-    TextView mPhone;
+    @BindView(R.id.detailList)
+    RecyclerView mDetailsList;
 
+    private static final int PERMISSION_REQUEST_CODE = 111;
     private Unbinder mUnbinder;
-    @BindView(R.id.detailsAccident)
-    TextView mAccident;
     private CarEntity mCarEntity;
     private CompositeDisposable mCompositeDisposable;
+    private CarDetailsAdapter mCarDetailsAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,40 +84,27 @@ public class CarDetailsFragment extends Fragment {
     private void setValues() {
         if (getActivity() == null)
             return;
-        mCarNo.setText(mCarEntity.getCarNo());
-        mCoordinates.setText(mCarEntity.getCoordinates());
-        mPhone.setText(mCarEntity.getPhone());
-        mCarbonMonoxideLevel.setText(makeString(getActivity().getResources().getString(R.string.gasCarbonMonoxide), mCarEntity.getCarbonMonoxideLevel()));
-        mNitrogenLevel.setText(makeString(getActivity().getResources().getString(R.string.gasNitrogen), mCarEntity.getNitrogenLevel()));
-        mMethaneLevel.setText(makeString(getActivity().getResources().getString(R.string.gasMethane), mCarEntity.getMethaneLevel()));
-        if (mCarEntity.getAccident().isEmpty()) {
-            mAccident.setTextColor(ContextCompat.getColor(getActivity(), R.color.materialGreen));
-            mAccident.setText(getActivity().getResources().getString(R.string.detailNoAccident));
-        } else {
-            mAccident.setTextColor(ContextCompat.getColor(getActivity(), R.color.materialRed));
-            mAccident.setText(mCarEntity.getAccident());
-        }
-    }
-
-    @NonNull
-    @Contract(pure = true)
-    private String makeString(String gasName, double gasValue) {
-        if (getActivity() == null)
-            return "";
-        return getActivity().getResources().getString(R.string.detailString, gasName, gasValue);
+        mCarDetailsAdapter = new CarDetailsAdapter(getActivity(), Utility.entityToDetails(mCarEntity));
+        mDetailsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mDetailsList.setAdapter(mCarDetailsAdapter);
     }
 
     private void initialize() {
         setData();
         mCompositeDisposable = new CompositeDisposable();
-        listeners();
     }
 
-    private void listeners() {
-        mCompositeDisposable.add(RxView.clicks(mCoordinates).subscribe(v -> EventBus.getDefault().post(new OpenMapsEvent(mCoordinates.getText().toString())), Timber::d));
-        mCompositeDisposable.add(RxView.clicks(mPhone).subscribe(v -> checkPermission(mPhone.getText().toString()), Timber::d));
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 
     private void checkPermission(String phoneNo) {
         if (getActivity() == null)
@@ -144,6 +121,11 @@ public class CarDetailsFragment extends Fragment {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + phoneNo));
         startActivity(callIntent);
+    }
+
+    @Subscribe
+    public void onCallPersonEvent(CallPersonEvent callPersonEvent) {
+        checkPermission(callPersonEvent.getPhoneNo());
     }
 
     private void cleanUp() {

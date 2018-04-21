@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~    Copyright 2018 nsnikhil
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,16 +14,12 @@
   ~    limitations under the License.
   -->
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/matchParent"
-    android:padding="@dimen/eight"
-    tools:context="com.nsnik.nrs.carmonitor.views.fragments.CarDetailsFragment">
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/detailList"
-        style="@style/matchParent" />
-
-
-</android.support.constraint.ConstraintLayout>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportHeight="24"
+    android:viewportWidth="24">
+    <path
+        android:fillColor="#000"
+        android:pathData="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+</vector>

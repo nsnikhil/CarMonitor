@@ -38,7 +38,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import timber.log.Timber;
 
 public class CarListFragment extends Fragment {
 
@@ -70,10 +69,13 @@ public class CarListFragment extends Fragment {
     }
 
     private void modifyList(List<CarEntity> carList) {
-        Timber.d(String.valueOf(carList.size()));
-        mCarList = carList;
+        mCarList.clear();
+        for (CarEntity carEntity : carList)
+            if (carEntity.getCarbonMonoxideLevel() > 600 || carEntity.getNitrogenLevel() > 600 || carEntity.getMethaneLevel() > 600)
+                mCarList.add(carEntity);
         mListAdapter.modifyList(mCarList);
     }
+
 
     private void cleanUp() {
         if (mUnbinder != null) {

@@ -14,14 +14,24 @@
   ~    limitations under the License.
   -->
 
-<resources>
-    <color name="colorPrimary">#F5F5F5</color>
-    <color name="colorPrimaryDark">#E0E0E0</color>
-    <color name="colorAccent">#212121</color>
 
-    <color name="materialBlue">#1976D2</color>
-    <color name="materialBrown">#5D4037</color>
-    <color name="materialRed">#D32F2F</color>
-    <color name="materialGreen">#00796B</color>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/detailsCard"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    app:cardCornerRadius="1dp"
+    app:cardElevation="1dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
 
-</resources>
+    <TextView
+        android:id="@+id/carHeader"
+        style="@style/warpContent"
+        android:layout_gravity="center"
+        android:text="@string/app_name"
+        android:textSize="48sp" />
+
+</android.support.v7.widget.CardView>
+
+
