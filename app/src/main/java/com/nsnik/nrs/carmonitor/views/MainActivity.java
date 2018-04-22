@@ -16,14 +16,19 @@
 
 package com.nsnik.nrs.carmonitor.views;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
+import android.support.design.widget.Snackbar;
 import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.FrameLayout;
 
 import com.nsnik.nrs.carmonitor.BuildConfig;
 import com.nsnik.nrs.carmonitor.MyApplication;
@@ -38,6 +43,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     private static final String[] FRAGMENT_TAGS = {"login", "home", "carList", "carDetails"};
+    @BindView(R.id.mainView)
+    FrameLayout mMainView;
     @BindView(R.id.mainToolbar)
     Toolbar mMainToolbar;
     @Nullable
@@ -53,7 +60,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialize() {
         setSupportActionBar(mMainToolbar);
-        getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new HomeFragment(), FRAGMENT_TAGS[1]).commit();
+        if (isConnected())
+            getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new HomeFragment(), FRAGMENT_TAGS[1]).commit();
+        else
+            Snackbar.make(mMainView, getResources().getString(R.string.noInternet), Snackbar.LENGTH_INDEFINITE).show();
+    }
+
+    private boolean isConnected() {
+        final ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        }
+        return false;
     }
 
     @VisibleForTesting

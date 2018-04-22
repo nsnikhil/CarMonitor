@@ -17,6 +17,7 @@
 <resources>
     <string name="app_name">Car Monitor</string>
     <string name="detailString"> %1$s : %2$.2f(in ppm)</string>
+    <string name="noInternet">No Internet</string>
 
     <!-- form-->
     <string name="form_name">Name</string>

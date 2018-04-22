@@ -14,30 +14,36 @@
   ~    limitations under the License.
   -->
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/horizontal"
-    android:padding="@dimen/eight">
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/itemCard"
-        android:layout_width="match_parent"
-        android:background="?selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?selectableItemBackground"
-        android:layout_height="?listPreferredItemHeight"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="0dp" />
+    android:id="@+id/itemCard"
+    android:layout_width="match_parent"
+    android:layout_height="?listPreferredItemHeight"
+    android:layout_margin="@dimen/eight"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
+    app:cardCornerRadius="1dp"
+    app:cardElevation="0dp">
 
     <TextView
         android:id="@+id/itemCarNo"
         style="@style/warpContent"
+        android:layout_gravity="center_vertical"
         android:paddingEnd="@dimen/eight"
         android:paddingStart="@dimen/eight"
         android:text="@string/app_name"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/itemCard"
-        app:layout_constraintTop_toTopOf="@id/itemCard" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/itemCarStatus"
+        style="@style/warpContent"
+        android:layout_gravity="end|center_vertical"
+        android:contentDescription="@string/app_name"
+        android:paddingEnd="@dimen/eight"
+        android:paddingStart="@dimen/eight"
+        android:src="@drawable/alert" />
+
+</android.support.v7.widget.CardView>

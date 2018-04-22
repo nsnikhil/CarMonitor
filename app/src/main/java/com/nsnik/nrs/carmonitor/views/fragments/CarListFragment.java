@@ -32,6 +32,8 @@ import com.nsnik.nrs.carmonitor.data.CarEntity;
 import com.nsnik.nrs.carmonitor.viewModel.CarViewModel;
 import com.nsnik.nrs.carmonitor.views.adapters.CarListAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,11 +70,8 @@ public class CarListFragment extends Fragment {
         mCarViewModel.getCarList().observe(this, this::modifyList);
     }
 
-    private void modifyList(List<CarEntity> carList) {
-        mCarList.clear();
-        for (CarEntity carEntity : carList)
-            if (carEntity.getCarbonMonoxideLevel() > 600 || carEntity.getNitrogenLevel() > 600 || carEntity.getMethaneLevel() > 600)
-                mCarList.add(carEntity);
+    private void modifyList(@NotNull final List<CarEntity> carList) {
+        mCarList = carList;
         mListAdapter.modifyList(mCarList);
     }
 

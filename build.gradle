@@ -40,13 +40,13 @@ ext {
 
     buildToolsVersion = "27.0.3"
 
-    supportLibVersion = "27.1.0"
+    supportLibVersion = "27.1.1"
 
-    constraintLayoutVersion = "1.1.0-beta6"
+    constraintLayoutVersion = "1.1.0"
 
     findBugJsr305Version = "3.0.2"
 
-    gpsVersion = "12.0.1"
+    gpsVersion = "15.0.0"
 
     rxJavaVersion = "2.1.12"
 
@@ -86,7 +86,7 @@ ext {
 
     roomTestingVersion = "1.0.0"
 
-    pagingVersion = "1.0.0-alpha7"
+    pagingVersion = "1.0.0-rc1"
 
     serialVersion = "0.1.6"
 
